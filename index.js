@@ -11,8 +11,6 @@ const problemCategories = ["implementation", "math", "data structures", "binary 
 bot.login(TOKEN);
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}`);
-    const relaxVC = bot.channels.get('648984691373899796')
-    relaxVC.join().then(connection => {}).catch(e=>{})
     setInterval(()=>{
         Enigmatic.find({}).then(users => {
             users.forEach(user=>{
@@ -303,7 +301,13 @@ bot.on('message', async message => {
                     solved: user.solvedProblems.length
                 })
             })
-            list.sort((a, b) => (a.score > b.score) ? 1 : (a.score == b.score && a.solved > b.solved)? 1 : -1)
+            list.sort((a, b) => {
+                if(a.score > b.score)
+                    return true;
+                else if(a.score === b.score && a.solved > b.solved)
+                    return true;
+                return false;
+            })
             const len = Math.min(10, list.length)
             const embed = new Discord.RichEmbed()
                 .setTitle("Leaderboard")
