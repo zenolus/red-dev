@@ -11,6 +11,8 @@ const problemCategories = ["implementation", "math", "data structures", "binary 
 bot.login(TOKEN);
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}`);
+    const relaxVC = bot.channels.get('648984691373899796')
+    relaxVC.join().then(connection => {}).catch(e=>{})
     setInterval(()=>{
         Enigmatic.find({}).then(users => {
             users.forEach(user=>{
