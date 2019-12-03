@@ -11,7 +11,7 @@ const problemCategories = ["implementation", "math", "data structures", "binary 
 bot.login(TOKEN);
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}`);
-    bot.user.setActivity('server requests', {type: "LISTENING"})
+    bot.user.setActivity('server requests!', {type: "LISTENING"})
     const rChan = bot.channels.find("name", "Relax")
     rChan.join().then(connection=>{})
     setInterval(()=>{
