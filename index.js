@@ -11,6 +11,9 @@ const problemCategories = ["implementation", "math", "data structures", "binary 
 bot.login(TOKEN);
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}`);
+    bot.user.setActivity('server requests', {type: "LISTENING"})
+    const rChan = bot.channels.find("name", "Relax")
+    rChan.join().then(connection=>{})
     setInterval(()=>{
         Enigmatic.find({}).then(users => {
             users.forEach(user=>{
@@ -356,18 +359,5 @@ bot.on('message', async message => {
         let msg = "Available topics are\n"
         problemCategories.forEach((cat, i) => msg += `${i+1}. ${cat}\n`)
         return message.reply(msg)
-    }
-    //Set up 24/7 radio
-    if(cmd === `music`){
-        if(!message.member.roles.find(r => r.name === "Founder"))
-            return
-        const rChan = bot.channels.find("name", "Relax")
-        rChan.join().then(connection=>{
-            return message.channel.send("=radio monstercat").then(m=>{
-                setTimeout(() => {
-                    m.delete()
-                }, 1000)
-            })
-        })
     }
 })
