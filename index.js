@@ -12,7 +12,6 @@ bot.login(TOKEN);
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}`);
     bot.user.setActivity('server requests!', {type: "LISTENING"})
-    const rChan = bot.channels.find("name", "Relax")
     setInterval(()=>{
         Enigmatic.find({}).then(users => {
             users.forEach(user=>{
