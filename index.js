@@ -213,7 +213,7 @@ bot.on('message', async message => {
         if(msgArray.length<=2)
             return message.channel.send("Please enter category and problem IDs");
         if(!message.member.roles.find(r => r.name === "Founder"))
-            return
+            return message.channel.send("That's not for you, sorry!")
         request(`https://codeforces.com/api/problemset.problems?tags=`, (error, response, body) => {
             const data = JSON.parse(response.body).result.problems
             const category = msgArray[1]
@@ -302,9 +302,9 @@ bot.on('message', async message => {
                 })
             })
             list.sort((a, b) => {
-                if(a.score > b.score)
+                if(a.score < b.score)
                     return true;
-                else if(a.score === b.score && a.solved > b.solved)
+                else if(a.score === b.score && a.solved < b.solved)
                     return true;
                 return false;
             })
@@ -356,5 +356,18 @@ bot.on('message', async message => {
         let msg = "Available topics are\n"
         problemCategories.forEach((cat, i) => msg += `${i+1}. ${cat}\n`)
         return message.reply(msg)
+    }
+    //Set up 24/7 radio
+    if(cmd === `music`){
+        if(!message.member.roles.find(r => r.name === "Founder"))
+            return
+        const rChan = bot.channels.find("name", "Relax")
+        rChan.join().then(connection=>{
+            return message.channel.send("=radio monstercat").then(m=>{
+                setTimeout(() => {
+                    m.delete()
+                }, 1000)
+            })
+        })
     }
 })
